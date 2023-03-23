@@ -37,6 +37,10 @@ app.get('/media', (req, res) => {
 
 var userCount = 0;
 
+function emitToSocket(srcSocket, name,value,value2) {
+    io.to(srcSocket.id).emit(name,value,value2);
+}
+
 io.on('connection', (socket) => {
     
     userCount += 1;
@@ -56,8 +60,42 @@ io.on('connection', (socket) => {
 
         try {
 
-            const array = JSON.parse(file);
+            var chosenPrompts = [];
+            const char = '§';
             
+            function getRandomMessage(list) {
+
+                // console.log(list)
+                
+                const randomNumber = Math.round(Math.random()*list.length)
+                // console.log(randomNumber)
+                const randomItem = list[randomNumber]
+                // console.log(randomItem)
+
+                if(chosenPrompts.find(obj => obj == randomItem)){
+                    getRandomMessage(list)
+                } else {
+                    chosenPrompts.push(randomItem)
+                };
+
+            };
+            
+            getRandomMessage(file);
+
+            chosenPrompts.forEach(msg => {
+
+                if(msg.includes(char)){
+                    emitToSocket(socket,'generated',msg,true);
+                }else{
+                    
+                    console.log('no ref');
+
+                    emitToSocket(socket,'generated',msg);
+
+                }
+                
+            });
+
         } catch (error) {console.log(error); socket.emit("toast",'Please supply a working .json.'); socket.emit('reset',null);}
 
     })

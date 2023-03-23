@@ -1,31 +1,32 @@
-
 <!DOCTYPE html>
-<html><head>
+<html>
+
+<head>
     <script src='https://html2canvas.hertzen.com/dist/html2canvas.js'>
         /***
- *                                                            888                                     888              .d888  .d888 
- *                                                            888                                     888             d88P"  d88P"  
- *                                                            888                                     888             888    888    
- *                88888b.d88b.  888  888 888d888 8888b.   .d88888  .d88b.   .d88b.  .d8888b  .d8888b  888888 888  888 888888 888888 
- *                888 "888 "88b 888  888 888P"      "88b d88" 888 d88""88b d8P  Y8b 88K      88K      888    888  888 888    888    
- *    888888      888  888  888 888  888 888    .d888888 888  888 888  888 88888888 "Y8888b. "Y8888b. 888    888  888 888    888    
- *                888  888  888 Y88b 888 888    888  888 Y88b 888 Y88..88P Y8b.          X88      X88 Y88b.  Y88b 888 888    888    
- *                888  888  888  "Y88888 888    "Y888888  "Y88888  "Y88P"   "Y8888   88888P'  88888P'  "Y888  "Y88888 888    888    
- *                                   888                                                                                            
- *                              Y8b d88P                                                                                            
- *                               "Y88P"                                                                                             
- */
+         *                                                            888                                     888              .d888  .d888 
+         *                                                            888                                     888             d88P"  d88P"  
+         *                                                            888                                     888             888    888    
+         *                88888b.d88b.  888  888 888d888 8888b.   .d88888  .d88b.   .d88b.  .d8888b  .d8888b  888888 888  888 888888 888888 
+         *                888 "888 "88b 888  888 888P"      "88b d88" 888 d88""88b d8P  Y8b 88K      88K      888    888  888 888    888    
+         *    888888      888  888  888 888  888 888    .d888888 888  888 888  888 88888888 "Y8888b. "Y8888b. 888    888  888 888    888    
+         *                888  888  888 Y88b 888 888    888  888 Y88b 888 Y88..88P Y8b.          X88      X88 Y88b.  Y88b 888 888    888    
+         *                888  888  888  "Y88888 888    "Y888888  "Y88888  "Y88P"   "Y8888   88888P'  88888P'  "Y888  "Y88888 888    888    
+         *                                   888                                                                                            
+         *                              Y8b d88P                                                                                            
+         *                               "Y88P"                                                                                             
+         */
     </script>
     <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
     <link rel="stylesheet" href="/roboto.css">
     <link rel="stylesheet" href="/custom.css">
 </head>
 
-<body style="background: rgb(39, 39, 39);"> 
-        <script>
-                console.log("script is working");
-          
-                var thing = `She's into superstitions
+<body style="background: rgb(39, 39, 39);">
+    <script>
+        console.log("script is working");
+
+        var thing = `She's into superstitions
 Black cats and voodoo dolls
 I feel a premonition
 That girl's gonna make me fall
@@ -99,40 +100,70 @@ Come on!
 Gotta la vida loca!
 Gotta, gotta, gotta la vida loca!
 Gotta, gotta, gotta la vi'...`;
-          
-                thing = thing.split("\n").join(", ");
-          
-                console.log(thing);
-          
-                for (let i = 0; i < thing.length; i++) {
-                  setTimeout(() => {
-                    document.title = thing.substring(i, i + 27);
-                  }, 150 * i);
-                }
-          
-                console.log(thing);
-              </script>
+
+        thing = thing.split("\n").join(", ");
+
+        console.log(thing);
+
+        for (let i = 0; i < thing.length; i++) {
+            setTimeout(() => {
+                document.title = thing.substring(i, i + 27);
+            }, 150 * i);
+        }
+
+        console.log(thing);
+    </script>
     <button id="start" type="button" style="position: sticky;top: 28px;">Start</button>
     <!-- <label for="list">Choose File</label> -->
     <input type="file" id="list"></input>
     <button style="float:right;" onclick="window.location.href=`/faq`;">Help</button>
     <div id="message" class="message" style="height: 0px;visibility: hidden;">
-        <div data-is-focusable="true" tabindex="-1" role="group" aria-labelledby="author-1676055343267 importance-1676055343267 badge-1676055343267 read-status-icon-1676055343267 content-1676055343267 attachments-1676055343267 timestamp-1676055343267 edited-1676055343267" data-last-visible="false" data-mid="1676055343267" data-tid="chat-pane-message" data-tabster="{&quot;uncontrolled&quot;: {}}" class="ms-FocusZone ui-chat__message hh hi hj ap hk hl hm hn ho hp hq hr hs ht hu hv hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ir is it iu iv iw ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr js jt fy fz ga gb jv jw jx jy jz ka kb kc kd ke kf kg kh ki kj kk kl km kn ko kp kq ui-animation hf hg dd" data-focuszone-id="FocusZone129" style="background-color: #343434;color: white;padding: 5px;padding-bottom: .1px;">
+        <div data-is-focusable="true" tabindex="-1" role="group"
+            aria-labelledby="author-1676055343267 importance-1676055343267 badge-1676055343267 read-status-icon-1676055343267 content-1676055343267 attachments-1676055343267 timestamp-1676055343267 edited-1676055343267"
+            data-last-visible="false" data-mid="1676055343267" data-tid="chat-pane-message"
+            data-tabster="{&quot;uncontrolled&quot;: {}}"
+            class="ms-FocusZone ui-chat__message hh hi hj ap hk hl hm hn ho hp hq hr hs ht hu hv hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ir is it iu iv iw ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr js jt fy fz ga gb jv jw jx jy jz ka kb kc kd ke kf kg kh ki kj kk kl km kn ko kp kq ui-animation hf hg dd"
+            data-focuszone-id="FocusZone129"
+            style="background-color: #343434;color: white;padding: 5px;padding-bottom: .1px;">
             <div style="position: relative; z-index: 999999;">
-            
-                <button class="ssBtn" type="button" style="float: right;z-index: 999999;width: 0px;height: 0px;padding:0px;margin:0px;" onclick="this.remove()">Download</button>
+
+                <button class="ssBtn" type="button"
+                    style="float: right;z-index: 999999;width: 0px;height: 0px;padding:0px;margin:0px;"
+                    onclick="this.remove()">Download</button>
 
             </div>
-            
-            
-            <div class="ui-chat__messageheader" style="padding-left: 17px;font-size: 14px;padding-top: 10px;bottom: -2.5px;position: relative;"><span class="ui-text kr ks kt ku kv kw ui-chat__message__author"><span dir="auto" data-tid="message-author-name" id="author-1676055343267" class="tooltip" style="font-weight: bold;color: #ffffffba;">A user<span class="tooltiptext">Tooltip text</span></span></span><time class="ui-text kr ks kx hi kw ui-chat__message__timestamp" dir="auto" aria-label="Today at 1:55 PM." datetime="2023-02-10T18:55:43.267Z" id="timestamp-1676055343267" title="Today at 1:55 PM" style="
+            <div class="ui-chat__messageheader"
+                style="padding-left: 17px;font-size: 14px;padding-top: 10px;bottom: -2.5px;position: relative;"><span
+                    class="ui-text kr ks kt ku kv kw ui-chat__message__author">
+                    
+                    <!-- removed the tooltip class so it can be added later -->
+                    
+                    <span dir="auto"
+                        data-tid="message-author-name" id="author-1676055343267" class=""
+                        style="font-weight: bold;color: #ffffffba;">A user
+
+                        <!-- Hide tooltip -->
+                        <!-- <span class="tooltiptext">Tooltip text</span> -->
+                        </span></span><time class="ui-text kr ks kx hi kw ui-chat__message__timestamp"
+                    dir="auto" aria-label="Today at 1:55 PM." datetime="2023-02-10T18:55:43.267Z"
+                    id="timestamp-1676055343267" title="Today at 1:55 PM" style="
     padding-left: 10px;
     color: #ffffff7d;
 ">Generated 12/1 3:51</time></div>
-            
-            <div class="ui-chat__messagecontent b de ky kz la lb lc la ld le lf lg lh li lj lk ll lm ln lo lp lq lr ls lt lu lv lw lx ly lz ma mb mc md me mf mg mh mi mj mk ml mm mn mo mp mq mr ms mt mu mv mw mx my mz na nb nc nd ne nf ng nh ni nj nk nl nm nn no np nq nr ns nt nu nv nw nx ny nz oa ob oc od oe of og oh oi oj ok ol om on oo op oq or os ot ou ov ow ox oy oz pa pb pc pd pe pf pg ph pi pj pk pl pm pn po pp pq pr ps pt pu pv pw px py pz qa qb qc qd qe qf qg qh qi qj qk ql qm qn qo qp qq qr qs qt qu qv qw qx qy qz ra rb rc rd re rf rg rh ri rj rk rl rm rn ro rp rq rr rs rt ru rv rw rx ry rz sa sb sc sd se sf sg sh si sj sk sl sm sn so sp dt sq sr ss st su sv sw sx sy sz ta tb tc dz" id="content-1676055343267" aria-label="Begin Reference, LIGHT MODE?, Johnson, Chloe (Student), 2/10/2023, 1:55 PM, End reference we in light mode irl" dir="auto">
+
+            <div class="ui-chat__messagecontent b de ky kz la lb lc la ld le lf lg lh li lj lk ll lm ln lo lp lq lr ls lt lu lv lw lx ly lz ma mb mc md me mf mg mh mi mj mk ml mm mn mo mp mq mr ms mt mu mv mw mx my mz na nb nc nd ne nf ng nh ni nj nk nl nm nn no np nq nr ns nt nu nv nw nx ny nz oa ob oc od oe of og oh oi oj ok ol om on oo op oq or os ot ou ov ow ox oy oz pa pb pc pd pe pf pg ph pi pj pk pl pm pn po pp pq pr ps pt pu pv pw px py pz qa qb qc qd qe qf qg qh qi qj qk ql qm qn qo qp qq qr qs qt qu qv qw qx qy qz ra rb rc rd re rf rg rh ri rj rk rl rm rn ro rp rq rr rs rt ru rv rw rx ry rz sa sb sc sd se sf sg sh si sj sk sl sm sn so sp dt sq sr ss st su sv sw sx sy sz ta tb tc dz"
+                id="content-1676055343267"
+                aria-label="Begin Reference, LIGHT MODE?,  (Student), 2/10/2023, 1:55 PM, End reference we in light mode irl"
+                dir="auto">
                 <div>
-                    <div id="reference" class="ui-flex cp bnh ahe bni bnj bnk bnl vh vi vj vk bnm bnn bno bnp hh bij uv ahm uo ahn jl bnq bnr zp bns acy bnt hm yx" data-track-action-gesture="click" data-track-action-outcome="show" data-track-action-scenario="messageQuotedReplyDeeplink" data-track-action-scenario-type="sendMsgs" data-track-module-name="messageQuotedReply" data-track="true" aria-label="Begin Reference, LIGHT MODE?, Johnson, Chloe (Student), 2/10/2023, 1:55 PM, End reference" dir="ltr" role="group" tabindex="-1" style="
+                    <div id="reference"
+                        class="ui-flex cp bnh ahe bni bnj bnk bnl vh vi vj vk bnm bnn bno bnp hh bij uv ahm uo ahn jl bnq bnr zp bns acy bnt hm yx"
+                        data-track-action-gesture="click" data-track-action-outcome="show"
+                        data-track-action-scenario="messageQuotedReplyDeeplink"
+                        data-track-action-scenario-type="sendMsgs" data-track-module-name="messageQuotedReply"
+                        data-track="true"
+                        aria-label="Begin Reference, LIGHT MODE?,  (Student), 2/10/2023, 1:55 PM, End reference"
+                        dir="ltr" role="group" tabindex="-1" style="
     background-color: #232323;
     padding: 10px;
     border-radius: 6px;
@@ -144,12 +175,12 @@ Gotta, gotta, gotta la vi'...`;
     display: flex;
     margin: 12.5px;
 ">
-                    <div style="background-color: #d0d0d0;width: 3px;right: 10px;position: relative;">
+                        <div style="background-color: #d0d0d0;width: 3px;right: 10px;position: relative;">
 
-                        
 
-                    </div>
-                        
+
+                        </div>
+
                         <div class="ui-box boe bof bog boh dt">
                             <div class="ui-flex cp cs eb">
                                 <div class="ui-flex cp boi boj" style="
@@ -162,18 +193,20 @@ Gotta, gotta, gotta la vi'...`;
     /* font-weight: bold; */
     color: #ffffffa1;
 "> Moad Avery (Student)
-</span></div>
+                                    </span></div>
                                 <div class="ui-box bok cv bol afg bom bon" style="
     padding: 5px;
 "><span class="ui-text ahl bid skipProofing" dir="auto">, what like bullyinf</span></div>
                             </div>
                         </div>
-                    
-                    
+
+
                     </div>
-                    <p id="msgContent" style="/*! padding: 10px; */padding-left: 17px;top: -2.5px;position: relative;">is it in the mansion?</p>
+                    <p id="msgContent" style="/*! padding: 10px; */padding-left: 17px;top: -2.5px;position: relative;">
+                        is it in the mansion?</p>
                 </div>
-            </div><div class="ui-chat__messagereadstatus td cp en te tf tg th ti tj tk tl tm tn to tp tq tr ts tt tu tv tw">
+            </div>
+            <div class="ui-chat__messagereadstatus td cp en te tf tg th ti tj tk tl tm tn to tp tq tr ts tt tu tv tw">
             </div>
         </div>
     </div>
@@ -185,7 +218,7 @@ Gotta, gotta, gotta la vi'...`;
         </div>
     </div>
     <div id="container" class="container">
-        
+
     </div>
     <div id="gameFuncs" style="visibility:hidden;">
         <input type="text" placeholder="Input your answer.">
@@ -193,14 +226,13 @@ Gotta, gotta, gotta la vi'...`;
     </div>
     <script src="/socket.io/socket.io.js"></script>
     <script type="text/javascript">
-        
         // WEIRD FUCKING BUG WHERE THE DOUBLE S ADDS AN ACCENTED A????? -avery
         // const char = '§'.substring(1,2)
         const char = '§'
 
         function sendToast(message) {
             const toast = document.getElementsByClassName('toast')[0].cloneNode(true)
-            toast.style='visibility: visible;margin-bottom: 10px;'
+            toast.style = 'visibility: visible;margin-bottom: 10px;'
             toast.innerHTML = message
             document.getElementsByClassName('toastContainer')[0].appendChild(toast)
             setTimeout(() => {
@@ -211,115 +243,115 @@ Gotta, gotta, gotta la vi'...`;
         const startButton = document.getElementById('start');
         const uploadButton = document.getElementById('list');
 
-        var socket       = io();
-        var button       = document.getElementById('start');
-        var input        = document.getElementById('input'); 
+        var socket = io();
+        var button = document.getElementById('start');
+        var input = document.getElementById('input');
         var answerStatus = document.getElementById('answerStatus');
 
-        function clone(msg,ref) {
+        function render(obj) {
+            html2canvas(obj).then(canvas => {
+                // document.body.appendChild(canvas)
+                var download = document.createElement('a');
+                download.href = canvas.toDataURL('image/png');
+                download.download = 'download.png';
+                download.click();
+            });
+        }
+
+        function clone(msg, ref) {
 
             const clone = document.getElementById('message').cloneNode(true)
-            clone.style="margin-bottom: 10px"
+            clone.style = "margin-bottom: 10px"
             const ogMsg = msg
-            msg = msg.split(char)[0]+msg.split(char)[2]
+            msg = msg.split(char)[0] + msg.split(char)[2]
             const split = msg.split(',')
             // console.log(split.length-1)
-            split.pop(split.length-1)
+            split.pop(split.length - 1)
             const author = ogMsg.split(',')
 
             const today = new Date()
 
-            clone.children[0].children[1].children[0].children[0].children[0].innerHTML = author[author.length-1]
-            clone.children[0].children[1].children[1].innerHTML = `Generated ${today.getDate()}/${today.getMonth()+1} ${today.getHours() < 10 ? "0"+today.getHours() : today.getHours()}:${today.getMinutes() < 10 ? "0"+today.getMinutes() : today.getMinutes()}:${today.getSeconds() < 10 ? "0"+today.getSeconds() : today.getSeconds()}`
+            clone.children[0].children[1].children[0].children[0].children[0].innerHTML = author[author.length - 1]
+            clone.children[0].children[1].children[1].innerHTML =
+                `Generated ${today.getDate()}/${today.getMonth() + 1} ${today.getHours() < 10 ? "0" + today.getHours() : today.getHours()}:${today.getMinutes() < 10 ? "0" + today.getMinutes() : today.getMinutes()}:${today.getSeconds() < 10 ? "0" + today.getSeconds() : today.getSeconds()}`
             clone.children[0].children[2].children[0].children['msgContent'].innerHTML = split.join(',')
             document.getElementById('container').appendChild(clone)
 
-            if(!ref){
+            if (!ref) {
                 clone.children[0].children[2].children[0].children['reference'].remove()
-            } else{
+            } else {
 
-               // pop the last values on the list since they are for the header
-               // then join the remaining back together and you're done
+                // pop the last values on the list since they are for the header
+                // then join the remaining back together and you're done
 
-               const refMsg = ogMsg.split(char)[1]
-               const cmasSplit = refMsg.split(',')
-               cmasSplit.pop()
-               cmasSplit.pop()
-               cmasSplit.pop()
-               
-               clone.children[0].children[2].children[0].children['reference'].children[1].children[0].children[0].children[0].innerHTML = cmasSplit[cmasSplit.length - 2]+cmasSplit[cmasSplit.length - 1]
-               cmasSplit.pop()
-               cmasSplit.pop()
-               clone.children[0].children[2].children[0].children['reference'].children[1].children[0].children[1].children[0].innerHTML = cmasSplit.join(',')
+                const refMsg = ogMsg.split(char)[1]
+                const cmasSplit = refMsg.split(',')
+                cmasSplit.pop()
+                cmasSplit.pop()
+                cmasSplit.pop()
+
+                clone.children[0].children[2].children[0].children['reference'].children[1].children[0].children[0]
+                    .children[0].innerHTML = cmasSplit[cmasSplit.length - 2] + cmasSplit[cmasSplit.length - 1]
+                cmasSplit.pop()
+                cmasSplit.pop()
+                clone.children[0].children[2].children[0].children['reference'].children[1].children[0].children[1]
+                    .children[0].innerHTML = cmasSplit.join(',')
 
             }
 
-            // console.log(clone.children[0].children[0].children[0])
+            // console.log(clone.children[0].children[0].children[0]);
 
-            // clone.children[0].children[0].children[0].style='float: right;z-index: 999999;'
-            // clone.children[0].children[0].children[0].addEventListener('click', () => {
-            //     // render(clone)
-            // })
+            clone.children[0].children[0].children[0].style = 'float: right;z-index: 999999;'
+            clone.children[0].children[0].children[0].addEventListener('click', () => {
+                render(clone)
+            })
 
         }
 
         function reset() {
             console.log('resetting user')
             setTimeout(() => {
-                uploadButton.style='visibility: shown';
+                uploadButton.style = 'visibility: shown';
             }, 1000);
         }
-    
-        
-        socket.on('answerStatus',(status)=>{
+
+
+        socket.on('answerStatus', (status) => {
             answerStatus.innerText = status
         });
 
-        socket.on('generated',(msg,ref)=>{
+        socket.on('generated', (msg, ref) => {
 
             ref ? ref : false;
 
-            render(msg,ref);
+            clone(msg, ref);
 
         });
 
         socket.on('toast', sendToast);
-        socket.on('reset', (a)=>{
+        socket.on('reset', (a) => {
             reset()
         });
 
 
         startButton.addEventListener('click', () => {
 
-            // function render(obj) {
-            //     html2canvas(obj).then(canvas => {
-            //         // document.body.appendChild(canvas)
-            //         var download = document.createElement('a');
-            //         download.href = canvas.toDataURL('image/png');
-            //         download.download = 'download.png';
-            //         download.click();
-            //     });
-            // }
-
-            if(typeof(uploadButton.files[0]) == "undefined"){
+            if (typeof (uploadButton.files[0]) == "undefined") {
 
                 sendToast('Select a file with messages.');
-                
-            }else{
-                uploadButton.style='visibility: hidden';
+
+            } else {
+                uploadButton.style = 'visibility: hidden';
                 console.log('uploaded to server');
 
-                if(uploadButton.files[0].type = 'application/json'){
-
-                    var items;
+                if (uploadButton.files[0].type = 'application/json') {
 
                     var fileReader = new FileReader();
-                    fileReader.onload = function(fileLoad){
+                    fileReader.onload = function (fileLoad) {
                         var text = fileLoad.target.result;
-                        items = JSON.parse(text);
 
                         // emit needs to be in here because this function is a promise
-                        socket.emit("upload", items.toString());
+                        socket.emit("upload", JSON.parse(text));
                     }
 
                     fileReader.readAsText(uploadButton.files[0], "UTF-8");
@@ -329,7 +361,8 @@ Gotta, gotta, gotta la vi'...`;
             }
 
         });
-
     </script>
 
-</body></html>
+</body>
+
+</html>
