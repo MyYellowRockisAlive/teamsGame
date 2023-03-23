@@ -1,23 +1,51 @@
-const { createServer } = require("http");
+const express = require('express');
+const app = express();
+const http = require('http');
+const server = http.createServer(app);
 const { Server } = require("socket.io");
+const io = new Server(server);
+const path = require('path')
 
-const httpServer = createServer();
-const io = new Server(httpServer, { /* options */ });
+// https://expressjs.com/en/starter/static-files.html STILL MUST USE path (for some reason it requires absolute path)
+app.use(express.static(path.join('../public')));
+app.use(express.static(path.join('../images')));
 
-io.on("connection", (socket) => {
-  // ...
+app.get('/', (req, res) => {
+
+    // YOU MUST USE path TO JOIN PATH BREADCRUMBS
+    res.sendFile(path.join(__dirname, '../public', 'index.html'));
+});
+app.get('/faq', (req, res) => {
+
+    // YOU MUST USE path TO JOIN PATH BREADCRUMBS
+    res.sendFile(path.join(__dirname, '../public', 'faq.html'));
 });
 
-/** can be used to fetch the number of currently connected clients */
-const count = io.engine.clientsCount;
-// may or may not be similar to the count of Socket instances in the main namespace, depending on your usage
-const count2 = io.of("/").sockets.size;
+var userCount = 0;
 
-io.engine.on("connection_error", (err) => {
-    console.log(err.req);      // the request object
-    console.log(err.code);     // the error code, for example 1
-    console.log(err.message);  // the error message, for example "Session ID unknown"
-    console.log(err.context);  // some additional error context
-  });
+io.on('connection', (socket) => {
+    
+    userCount += 1;
 
-httpServer.listen(3000);
+    console.log('a user connected:',userCount);
+
+    socket.on('checkAnswer', (msg) => {
+        console.log('message: ' + msg);
+        if(msg == 'hi'){
+            socket.emit('answerStatus','Correct');
+        }else{
+            socket.emit('answerStatus','Wrong');
+        };
+    });
+
+    socket.on('disconnect', () => {
+
+        userCount -= 1;
+
+        console.log('user disconnected',userCount);
+    });
+});
+
+server.listen(3000, () => {
+  console.log('listening on *:3000');
+});
