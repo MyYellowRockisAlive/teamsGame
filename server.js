@@ -4,7 +4,8 @@ const http = require('http');
 const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
-const path = require('path')
+const path = require('path');
+const { writeFile } = require('fs');
 
 // https://expressjs.com/en/starter/static-files.html STILL MUST USE path (for some reason it requires absolute path)
 app.use(express.static(path.join('../public')));
@@ -19,6 +20,19 @@ app.get('/faq', (req, res) => {
 
     // YOU MUST USE path TO JOIN PATH BREADCRUMBS
     res.sendFile(path.join(__dirname, '../public', 'faq.html'));
+});
+app.get('/media', (req, res) => {
+
+    // figure out how to include the params
+
+    console.log(req.query.src);
+    console.log(req.query.origin);
+
+    // YOU MUST USE path TO JOIN PATH BREADCRUMBS
+    res.sendFile(path.join(__dirname, '../public', 'media.html'));
+
+
+
 });
 
 var userCount = 0;
@@ -37,6 +51,18 @@ io.on('connection', (socket) => {
             socket.emit('answerStatus','Wrong');
         };
     });
+
+    socket.on("upload", (file) => {
+
+        try {
+
+            const array = JSON.parse(file);
+            
+        } catch (error) {console.log(error); socket.emit("toast",'Please supply a working .json.'); socket.emit('reset',null);}
+
+    })
+
+
 
     socket.on('disconnect', () => {
 
