@@ -224,6 +224,12 @@ Gotta, gotta, gotta la vi'...`;
         <input type="text" placeholder="Input your answer.">
         <button id="answer" type="submit">Confirm</button>
     </div>
+    
+    <div id='answerContainer'>
+        <input type='text'>
+        <button type='submit' onclick='this.parentNode.children[0].value = ""'>Submit</button>
+    </div>
+    
     <script src="/socket.io/socket.io.js"></script>
     <script type="text/javascript">
         // WEIRD FUCKING BUG WHERE THE DOUBLE S ADDS AN ACCENTED A????? -avery
@@ -271,7 +277,8 @@ Gotta, gotta, gotta la vi'...`;
 
             const today = new Date()
 
-            clone.children[0].children[1].children[0].children[0].children[0].innerHTML = author[author.length - 1]
+            // this enables the tooptip
+            // clone.children[0].children[1].children[0].children[0].children[0].innerHTML = author[author.length - 1]
             clone.children[0].children[1].children[1].innerHTML =
                 `Generated ${today.getDate()}/${today.getMonth() + 1} ${today.getHours() < 10 ? "0" + today.getHours() : today.getHours()}:${today.getMinutes() < 10 ? "0" + today.getMinutes() : today.getMinutes()}:${today.getSeconds() < 10 ? "0" + today.getSeconds() : today.getSeconds()}`
             clone.children[0].children[2].children[0].children['msgContent'].innerHTML = split.join(',')
