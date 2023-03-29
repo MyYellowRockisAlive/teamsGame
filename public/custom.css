@@ -1,123 +1,137 @@
 body {
-    font-family: "Roboto";
-    color: rgb(224, 224, 224);
-  }
-  
-  .toast {
-    padding: 10px;
-    border-radius: 10px;
-    visibility: hidden;
-    background-color: #464646;
-    color: rgb(224, 224, 224);
-  }
-  
-  .noselect {
-    user-select: none;
-  }
-  
-  .inlbtn {
-    display: block;
-    /* width: 100%; */
-    aspect-ratio: 1 / 1;
-    position: relative;
-  }
-  .message {
-    /* padding: 10px; */
-    width: 55%;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
-  button {
-    margin: 20px;
-    background-color: #ffffff0c;
-    color: whitesmoke;
-    border-color: grey;
-    width: 150px;
-    height: 50px;
-    border-radius: 15px;
-    border-width: 2.5px;
-    border-style: dashed;
-    transition: 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-    position: relative;
-  }
-  
-  button:hover {
-    border-color: white;
-  }
-  
-  h2 {
-    font-family: "Secular One";
-    margin-bottom: 7.5px;
-  }
-  
-  section {
-    border-top: 3px solid white;
-  }
-  
-  .code {
-    background-color: rgb(24, 24, 26);
-    padding: 7.5px;
-    border-color: grey;
-    border-width: 1.5px;
-    border-radius: 10px;
-    border-style: solid;
-    width: 100%;
-    display: block;
-    margin-left: 0px;
-    position: relative;
-  }
-  
-  ol li {
-    margin-bottom: 50px;
-  }
-  
-  .tooltip .tooltiptext {
-    visibility: hidden;
-    width: 120px;
-    background-color: #555;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-    position: absolute;
-    z-index: 1;
-    bottom: 125%;
-    left: 50%;
-    margin-left: -60px;
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-  
-  .tooltip .tooltiptext::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: #555 transparent transparent transparent;
-  }
-  
-  .tooltip:hover .tooltiptext {
-    visibility: visible;
-    opacity: 1;
-  }
-  
-  .keycap {
-    background-image: linear-gradient(white, #d1d1d1);
-    color: darkslategray;
-    padding: 5px;
-    border-color: #9d9ea1;
-    border-width: 2px;
-    border-radius: 5px;
-    border-style: solid;
-    box-shadow: 0px 2.5px 0px #9d9ea1;
-  }
-  
-  img {
-    width: 100%;
-    margin-top: 10px;
-  }
-  
+  font-family: "Roboto";
+  color: rgb(224, 224, 224);
+}
+
+.toast {
+  padding: 10px;
+  border-radius: 10px;
+  visibility: hidden;
+  background-color: #464646;
+  color: rgb(224, 224, 224);
+}
+
+.noselect {
+  user-select: none;
+}
+
+.inlbtn {
+  display: block;
+  /* width: 100%; */
+  aspect-ratio: 1 / 1;
+  position: relative;
+}
+.message {
+  /* padding: 10px; */
+  width: 55%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+input {
+  display: inline-block;
+}
+
+.loginContainer {
+  margin: auto;
+  width: 25%;
+  height: 10%;
+  border-color: #ffffff;
+  border-width: 2.5px;
+  border-radius: 10px;
+  border-style: dashed;
+  padding: 20px;
+}
+
+button {
+  margin: 20px;
+  background-color: #ffffff0c;
+  color: whitesmoke;
+  border-color: grey;
+  width: 150px;
+  height: 50px;
+  border-radius: 15px;
+  border-width: 2.5px;
+  border-style: dashed;
+  transition: 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  position: relative;
+}
+
+button:hover {
+  border-color: white;
+}
+
+h2 {
+  font-family: "Secular One";
+  margin-bottom: 7.5px;
+}
+
+section {
+  border-top: 3px solid white;
+}
+
+.code {
+  background-color: rgb(24, 24, 26);
+  padding: 7.5px;
+  border-color: grey;
+  border-width: 1.5px;
+  border-radius: 10px;
+  border-style: solid;
+  width: 100%;
+  display: block;
+  margin-left: 0px;
+  position: relative;
+}
+
+ol li {
+  margin-bottom: 50px;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+.keycap {
+  background-image: linear-gradient(white, #d1d1d1);
+  color: darkslategray;
+  padding: 5px;
+  border-color: #9d9ea1;
+  border-width: 2px;
+  border-radius: 5px;
+  border-style: solid;
+  box-shadow: 0px 2.5px 0px #9d9ea1;
+}
+
+img {
+  width: 100%;
+  margin-top: 10px;
+}

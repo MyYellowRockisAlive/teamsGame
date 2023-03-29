@@ -23,100 +23,53 @@
 </head>
 
 <body style="background: rgb(39, 39, 39);">
-    <script>
-        console.log("script is working");
-
-        var thing = `She's into superstitions
-Black cats and voodoo dolls
-I feel a premonition
-That girl's gonna make me fall
-She's into new sensations
-New kicks in the candlelight
-She's got a new addiction
-For every day and night
-She'll make you take your clothes off and go dancing in the rain
-She'll make you live her crazy life, but she'll take away your pain
-Like a bullet to your brain
-Come on!
-Upside, inside out
-She's livin' la vida loca
-She'll push and pull you down
-Livin' la vida loca
-Her lips are devil red
-And her skin's the color mocha
-She will wear you out
-Livin' la vida loca
-Come on!
-Livin' la vida loca
-Come on!
-She's livin' la vida loca
-Woke up in New York City
-In a funky cheap hotel
-She took my heart, and she took my money
-She must've slipped me a sleeping pill
-She never drinks the water and
-Makes you order French champagne
-Once you've had a taste of her
-You'll never be the same
-Yeah, she'll make you go insane
-Come on!
-Upside, inside out
-She's livin' la vida loca
-She'll push and pull you down
-Livin' la vida loca
-Her lips are devil red
-And her skin's the color mocha
-She will wear you out
-Livin' la vida loca
-Come on!
-Livin' la vida loca
-She's livin' la vida loca
-She'll make you take your clothes off and go dancing in the rain
-She'll make you live her crazy life, but she'll take away your pain
-Like a bullet to your brain
-Come on!
-Upside, inside out
-She's livin' la vida loca
-She'll push and pull you down
-Livin' la vida loca
-Her lips are devil red
-And her skin's the color mocha
-She will wear you out
-Livin' la vida loca
-Come on!
-Upside, inside out
-She's livin' la vida loca
-She'll push and pull you down
-Livin' la vida loca
-Her lips are devil red
-And her skin's the color mocha
-She will wear you out
-Livin' la vida loca
-Come on!
-Livin' la vida loca
-Come on!
-She's livin' la vida loca
-Come on!
-Gotta la vida loca!
-Gotta, gotta, gotta la vida loca!
-Gotta, gotta, gotta la vi'...`;
-
-        thing = thing.split("\n").join(", ");
-
-        console.log(thing);
-
-        for (let i = 0; i < thing.length; i++) {
-            setTimeout(() => {
-                document.title = thing.substring(i, i + 27);
-            }, 150 * i);
+    <script type='text/javascript'>
+    
+        function setCookie(cname, cvalue, exdays) {
+            const d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            let expires = "expires="+d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
         }
 
-        console.log(thing);
+        function getCookie(cname) {
+            let name = cname + "=";
+            let ca = document.cookie.split(';');
+            for(let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        function checkCookie() {
+            let user = getCookie("account");
+            if (user != "") {
+                
+            } else {
+                document.location = document.location.origin+'/login'
+            }
+        }
+        
+        checkCookie();
+    
     </script>
-    <button id="start" type="button" style="position: sticky;top: 28px;">Start</button>
+    
+    <!-- <button id="start" type="button" style="position: sticky;top: 28px;">Start</button> -->
     <!-- <label for="list">Choose File</label> -->
-    <input type="file" id="list"></input>
+    <!-- <input type="file" id="list"></input> -->
     <button style="float:right;" onclick="window.location.href=`/faq`;">Help</button>
+    
+    <div id='answerContainer' style="position: sticky;top: 28px;display: inline-block;">
+        <input id='input' type='text'>
+        <button id='submit' type='submit' onclick='sendAnswer()'>Submit</button>
+    </div>
+    
     <div id="message" class="message" style="height: 0px;visibility: hidden;">
         <div data-is-focusable="true" tabindex="-1" role="group"
             aria-labelledby="author-1676055343267 importance-1676055343267 badge-1676055343267 read-status-icon-1676055343267 content-1676055343267 attachments-1676055343267 timestamp-1676055343267 edited-1676055343267"
@@ -125,13 +78,13 @@ Gotta, gotta, gotta la vi'...`;
             class="ms-FocusZone ui-chat__message hh hi hj ap hk hl hm hn ho hp hq hr hs ht hu hv hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ir is it iu iv iw ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr js jt fy fz ga gb jv jw jx jy jz ka kb kc kd ke kf kg kh ki kj kk kl km kn ko kp kq ui-animation hf hg dd"
             data-focuszone-id="FocusZone129"
             style="background-color: #343434;color: white;padding: 5px;padding-bottom: .1px;">
-            <div style="position: relative; z-index: 999999;">
+            <!-- <div style="position: relative; z-index: 999999;">
 
                 <button class="ssBtn" type="button"
                     style="float: right;z-index: 999999;width: 0px;height: 0px;padding:0px;margin:0px;"
                     onclick="this.remove()">Download</button>
 
-            </div>
+            </div> -->
             <div class="ui-chat__messageheader"
                 style="padding-left: 17px;font-size: 14px;padding-top: 10px;bottom: -2.5px;position: relative;"><span
                     class="ui-text kr ks kt ku kv kw ui-chat__message__author">
@@ -151,8 +104,8 @@ Gotta, gotta, gotta la vi'...`;
     color: #ffffff7d;
 ">Generated 12/1 3:51</time></div>
 
-            <div class="ui-chat__messagecontent b de ky kz la lb lc la ld le lf lg lh li lj lk ll lm ln lo lp lq lr ls lt lu lv lw lx ly lz ma mb mc md me mf mg mh mi mj mk ml mm mn mo mp mq mr ms mt mu mv mw mx my mz na nb nc nd ne nf ng nh ni nj nk nl nm nn no np nq nr ns nt nu nv nw nx ny nz oa ob oc od oe of og oh oi oj ok ol om on oo op oq or os ot ou ov ow ox oy oz pa pb pc pd pe pf pg ph pi pj pk pl pm pn po pp pq pr ps pt pu pv pw px py pz qa qb qc qd qe qf qg qh qi qj qk ql qm qn qo qp qq qr qs qt qu qv qw qx qy qz ra rb rc rd re rf rg rh ri rj rk rl rm rn ro rp rq rr rs rt ru rv rw rx ry rz sa sb sc sd se sf sg sh si sj sk sl sm sn so sp dt sq sr ss st su sv sw sx sy sz ta tb tc dz"
-                id="content-1676055343267"
+            <div
+                id="content"
                 aria-label="Begin Reference, LIGHT MODE?,  (Student), 2/10/2023, 1:55 PM, End reference we in light mode irl"
                 dir="auto">
                 <div>
@@ -220,15 +173,6 @@ Gotta, gotta, gotta la vi'...`;
     <div id="container" class="container">
 
     </div>
-    <div id="gameFuncs" style="visibility:hidden;">
-        <input type="text" placeholder="Input your answer.">
-        <button id="answer" type="submit">Confirm</button>
-    </div>
-    
-    <div id='answerContainer'>
-        <input type='text'>
-        <button type='submit' onclick='this.parentNode.children[0].value = ""'>Submit</button>
-    </div>
     
     <script src="/socket.io/socket.io.js"></script>
     <script type="text/javascript">
@@ -279,13 +223,14 @@ Gotta, gotta, gotta la vi'...`;
 
             // this enables the tooptip
             // clone.children[0].children[1].children[0].children[0].children[0].innerHTML = author[author.length - 1]
-            clone.children[0].children[1].children[1].innerHTML =
-                `Generated ${today.getDate()}/${today.getMonth() + 1} ${today.getHours() < 10 ? "0" + today.getHours() : today.getHours()}:${today.getMinutes() < 10 ? "0" + today.getMinutes() : today.getMinutes()}:${today.getSeconds() < 10 ? "0" + today.getSeconds() : today.getSeconds()}`
-            clone.children[0].children[2].children[0].children['msgContent'].innerHTML = split.join(',')
+            // clone.children[0].children[1].children[1].innerHTML =
+                // `Generated ${today.getDate()}/${today.getMonth() + 1} ${today.getHours() < 10 ? "0" + today.getHours() : today.getHours()}:${today.getMinutes() < 10 ? "0" + today.getMinutes() : today.getMinutes()}:${today.getSeconds() < 10 ? "0" + today.getSeconds() : today.getSeconds()}`
+            // clone.children[0].children[2].children[0].children['msgContent'].innerHTML = split.join(',')
+            clone.querySelector('#content').querySelector('div').querySelector('#msgContent').innerHTML = ogMsg
             document.getElementById('container').appendChild(clone)
 
             if (!ref) {
-                clone.children[0].children[2].children[0].children['reference'].remove()
+                clone.querySelector('div[id="reference"]').remove()
             } else {
 
                 // pop the last values on the list since they are for the header
@@ -308,10 +253,10 @@ Gotta, gotta, gotta la vi'...`;
 
             // console.log(clone.children[0].children[0].children[0]);
 
-            clone.children[0].children[0].children[0].style = 'float: right;z-index: 999999;'
-            clone.children[0].children[0].children[0].addEventListener('click', () => {
-                render(clone)
-            })
+            // clone.children[0].children[0].children[0].style = 'float: right;z-index: 999999;'
+            // clone.children[0].children[0].children[0].addEventListener('click', () => {
+            //     render(clone)
+            // })
 
         }
 
@@ -326,13 +271,19 @@ Gotta, gotta, gotta la vi'...`;
         socket.on('answerStatus', (status) => {
             answerStatus.innerText = status
         });
+        
+        function sendAnswer(){
+            if(input.value !== '' && input.value !== ' '){
+                socket.emit('checkAnswer', input.value,'user');
+                input.value = '';
+            }
+        }
 
-        socket.on('generated', (msg, ref) => {
-
-            ref ? ref : false;
-
-            clone(msg, ref);
-
+        input.addEventListener('keydown', (key) => {
+            
+            if(key.keyCode == 13){
+                sendAnswer()
+            }
         });
 
         socket.on('toast', sendToast);
@@ -340,35 +291,26 @@ Gotta, gotta, gotta la vi'...`;
             reset()
         });
 
-
-        startButton.addEventListener('click', () => {
-
-            if (typeof (uploadButton.files[0]) == "undefined") {
-
-                sendToast('Select a file with messages.');
-
-            } else {
-                uploadButton.style = 'visibility: hidden';
-                console.log('uploaded to server');
-
-                if (uploadButton.files[0].type = 'application/json') {
-
-                    var fileReader = new FileReader();
-                    fileReader.onload = function (fileLoad) {
-                        var text = fileLoad.target.result;
-
-                        // emit needs to be in here because this function is a promise
-                        socket.emit("upload", JSON.parse(text));
-                    }
-
-                    fileReader.readAsText(uploadButton.files[0], "UTF-8");
-
-                }
-
-            }
-
+        socket.on('loadMessage',(message,user)=>{
+            console.log(message)
+           clone(message,false) 
         });
+
+        // startButton.addEventListener('click', () => {
+
+        //     // uploadButton.style = 'visibility: hidden';
+        //         console.log('uploaded to server');
+
+        //         if(input.value !== '' || input.value !== ' '){
+        //             socket.emit('checkAnswer',input.value);
+        //         }
+
+        // });
     </script>
+
+
+
+
 
 </body>
 
