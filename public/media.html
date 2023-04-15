@@ -1,0 +1,17 @@
+<html>
+<body style="background-color: #000000; display: flex; align-items: center; justify-content: center;">
+    <script>
+        const urlSearchParams = new URLSearchParams(window.location.search);
+        const params = Object.fromEntries(urlSearchParams.entries());
+        const src = params.src
+        const origin = params.origin
+        const img = document.createElement("img");
+        document.body.appendChild(img)
+        img.src = src
+        img.style = "cursor: zoom-out; width: 100%;"
+        img.addEventListener('click', () => {
+           document.location = document.location.origin + origin 
+        });
+    </script>
+</body>
+</html>
