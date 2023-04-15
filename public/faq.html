@@ -45,7 +45,7 @@
     The ballers in here tonight, they gon' buy a hundred bottles
     As soon as you shake it I know they gon' make it colossal in here
     'Cause shawty you thinkin' them tricks that you do with your body
-    Got all of these niggas they crowding around you like they seen Beyoncé in here (she here, she here)
+    Got all of these ni--s they crowding around you like they seen Beyoncé in here (she here, she here)
     You want your own and you need your own, baby, who am I to judge? (Who am I to judge?)
     'Cause how could I ever trip about it when I met you in the club? (Met you in the club)
     I make enough for the both of us, but you dance anyway
@@ -302,9 +302,9 @@ setTimeout(() => {
             </li>
           </ol>
           <div>
-            <img src="example.gif" style="cursor: zoom-in;" onclick="document.location = '/media?src=example.gif&origin=/faq'" />
-            <img src="console.png" />
-            <img src="save_as_json.png" />
+            <img class='media' src="example.gif"/>
+            <img class='media' src="console.png" />
+            <img class='media' src="save_as_json.png" />
           </div>
         </div>
       </section>
@@ -338,5 +338,14 @@ setTimeout(() => {
         </div>
       </section>
     </div>
+    
+    <script>
+      const media = document.getElementsByClassName('media');
+      for(let i = 0; i < media.length; i++) {
+        media[i].addEventListener('click', () => {
+          document.location = `/media?src=${media[i].src}&origin=/faq`;
+        })
+      }
+    </script>
   </body>
 </html>
