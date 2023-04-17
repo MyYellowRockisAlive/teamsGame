@@ -11,6 +11,17 @@ body {
   color: rgb(224, 224, 224);
 }
 
+.loginContainer {
+  margin: auto;
+  width: 25%;
+  height: 10%;
+  border-color: #ffffff;
+  border-width: 2.5px;
+  border-radius: 10px;
+  border-style: dashed;
+  padding: 20px;
+}
+
 .noselect {
   user-select: none;
 }
