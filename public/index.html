@@ -23,6 +23,42 @@
 </head>
 
 <body style="background: rgb(39, 39, 39); ">
+    <script type='text/javascript'>
+    
+        function setCookie(cname, cvalue, exdays) {
+            const d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            let expires = "expires="+d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+
+        function getCookie(cname) {
+            let name = cname + "=";
+            let ca = document.cookie.split(';');
+            for(let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        function checkCookie() {
+            let user = getCookie("account");
+            if (user != "") {
+                
+            } else {
+                document.location = document.location.origin+'/login'
+            }
+        }
+        
+        checkCookie();
+    
+    </script>
     <script>
         console.log("script is working");
 
@@ -114,6 +150,10 @@ Gotta, gotta, gotta la vi'...`;
         console.log(thing);
     </script>
     
+    <div id='blackout' class='coverScreen' style="visibility: hidden;">
+        <div id='blackoutMsg' style="font-size: 250%;"></div>
+    </div>
+    
     <div id='winner' class='coverScreen winner' style="visibility: hidden;">
         <div><span id='endMessage' style='font-size: 250%'>Winner!</span><br/><div style='font-size: 100%'>Valiant victory for <span id='winnerName' style='color: #8BFF3D'></span></div></div>
     </div>
@@ -122,6 +162,7 @@ Gotta, gotta, gotta la vi'...`;
     <!-- <label for="list">Choose File</label> -->
     <input type="file" id="list"></input>
     <button style="float:right;" onclick="window.location.href=`/faq`;">Help</button>
+    <div style='float: right; height: 50px;margin-top: 20px; display: flex; align-items: center; color: rgba(255, 255, 255, 0.25)'><span id='playerCount' style='margin-right: 5px;'></span> players</div>
     <div id="message" class="message" style="height: 0px;visibility: hidden;">
         <div data-is-focusable="true" tabindex="-1" role="group"
             aria-labelledby="author-1676055343267 importance-1676055343267 badge-1676055343267 read-status-icon-1676055343267 content-1676055343267 attachments-1676055343267 timestamp-1676055343267 edited-1676055343267"
@@ -237,6 +278,15 @@ Gotta, gotta, gotta la vi'...`;
         // WEIRD FUCKING BUG WHERE THE DOUBLE S ADDS AN ACCENTED A????? -avery
         // const char = '§'.substring(1,2)
         const char = '§'
+        var socket = io();
+        var button = document.getElementById('start');
+        var input = document.getElementById('input');
+        var answerStatus = document.getElementById('answer');
+        var answerInput = document.getElementById('answerValue');
+        
+        socket.emit('getPlayerCount');
+        
+        socket.emit('fetchMessages',getCookie('account'));
 
         function sendToast(message) {
             const toast = document.getElementsByClassName('toast')[0].cloneNode(true)
@@ -250,12 +300,6 @@ Gotta, gotta, gotta la vi'...`;
 
         const startButton = document.getElementById('start');
         const uploadButton = document.getElementById('list');
-
-        var socket = io();
-        var button = document.getElementById('start');
-        var input = document.getElementById('input');
-        var answerStatus = document.getElementById('answer');
-        var answerInput = document.getElementById('answerValue');
 
         function render(obj) {
             html2canvas(obj).then(canvas => {
@@ -326,6 +370,7 @@ Gotta, gotta, gotta la vi'...`;
             
             // PURE DEFAULTS (UNCHANGING RESETS)
             document.getElementById('winner').style = "display: none;";
+            document.getElementById('blackout').style = "display: none;";
             
             if(blank){
                 console.log('Removing Buttons')
@@ -347,13 +392,18 @@ Gotta, gotta, gotta la vi'...`;
         }
 
         answerStatus.addEventListener("click", () => {
-            socket.emit('checkAnswer',answerInput.value);
+            socket.emit('checkAnswer',answerInput.value,getCookie('account'));
         });
         answerValue.addEventListener("keydown", (key) => {
             if(key.code == 'Enter'){
-                socket.emit('checkAnswer',answerInput.value);
+                socket.emit('checkAnswer',answerInput.value,getCookie('account'));
                 answerValue.value = '';
             }
+        });
+
+        socket.on('playerCount',(count) => {
+           const counter = document.getElementById('playerCount');
+           counter.innerText = count;
         });
 
         socket.on('answerStatus', (status) => {
@@ -383,6 +433,11 @@ Gotta, gotta, gotta la vi'...`;
             document.getElementById('winnerName').innerText = name;
             document.getElementById('winner').style = '';
             document.getElementById('endMessage').innerText = endMessages[tmp];
+        })
+        
+        socket.on('blackout', (name, msg) => {
+            document.getElementById('blackout').style = '';
+            document.getElementById('blackoutMsg').innerText = msg
         })
 
 

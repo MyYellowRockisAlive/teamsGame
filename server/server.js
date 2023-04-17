@@ -5,7 +5,8 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 const path = require("path");
-const { writeFile } = require("fs");
+const fs = require("fs");
+const { writeFile } = fs;
 
 // https://expressjs.com/en/starter/static-files.html STILL MUST USE path (for some reason it requires absolute path)
 app.use(express.static(path.join("../public")));
@@ -29,6 +30,14 @@ app.get("/media", (req, res) => {
   res.sendFile(path.join(__dirname, "../public", "media.html"));
   // res.render("index", { title: "Express" });
 });
+app.get("/login", (req, res) => {
+  // figure out how to include the params
+
+  console.log(req.query.origin);
+
+  // YOU MUST USE path TO JOIN PATH BREADCRUMBS
+  res.sendFile(path.join(__dirname, "../public", "login.html"));
+});
 
 var userCount = 0;
 const char = "§";
@@ -36,6 +45,8 @@ var chosenPrompts = [];
 const wantedPrompts = 10;
 var users = {};
 var game = false;
+var gamemode = "turns";
+var playerAnswers = {};
 
 function emitToSocket(srcSocket, name, value, value2) {
   io.to(srcSocket.id).emit(name, value, value2);
@@ -53,26 +64,73 @@ io.on("connection", (socket) => {
  |_|             |___/                                                      |___/ 
    */
   userCount += 1;
+  io.emit("playerCount", userCount);
   users[socket.id] ? null : (users[socket.id] = {});
   // LOAD THEM DEPENDING ON IF THE GAME IS IN PROGRESS OR NOT
   game
     ? ((users[socket.id]["playing"] = true), socket.emit("reset", true))
     : ((users[socket.id]["playing"] = false), socket.emit("reset"));
+  userCount == 1
+    ? ((users[socket.id]["host"] = true), socket.emit("reset"))
+    : ((users[socket.id]["host"] = false), socket.emit("reset", true));
   // RESET PROMPT INDEX
   users[socket.id]["promptIndex"] = 0;
   // console.log(userCount, users);
 
-  function sendMessage(index) {
+  function sendMessage(index, fromIO) {
     const msg = chosenPrompts[index];
     // console.log(msg.message);
-    if (msg.message.includes(char)) {
-      emitToSocket(socket, "generated", msg.message, true);
+    if (fromIO == true) {
+      if (msg.message.includes(char)) {
+        io.emit("generated", msg.message, true);
+      } else {
+        io.emit("generated", msg.message);
+      }
     } else {
-      emitToSocket(socket, "generated", msg.message);
+      if (msg.message.includes(char)) {
+        socket.emit("generated", msg.message, true);
+      } else {
+        socket.emit("generated", msg.message);
+      }
     }
   }
 
-  socket.on("checkAnswer", (msg) => {
+  function checkToken(token) {
+    var toReturn = undefined;
+    if (token == undefined || token == null) {
+      socket.emit("reset");
+      return undefined;
+    }
+
+    const file = getUsersFile();
+
+    for (var obj in file) {
+      // console.log(obj);
+      if (file[obj].token == token) {
+        toReturn = obj;
+      }
+    }
+
+    return toReturn;
+  }
+  const usersFile = "./.caydengrey";
+  function getUsersFile() {
+    const data = fs.readFileSync(usersFile, { encoding: "utf8" });
+    if (data == undefined || data == "") {
+      // admin is hardcoded and anyone can access
+      const buf = new Buffer.from(
+        `{ "admin": { "token": "", "password": "admin" } }`
+      );
+      fs.writeFileSync(usersFile, buf.toString("base64"), { encoding: "utf8" });
+    }
+    return JSON.parse(Buffer.from(data, "base64").toString("ascii"));
+  }
+
+  socket.on("getPlayerCount", () => {
+    socket.emit("playerCount", userCount);
+  });
+
+  socket.on("checkAnswer", (msg, token) => {
     if (chosenPrompts.length == 0) {
       return;
     }
@@ -96,7 +154,65 @@ io.on("connection", (socket) => {
       });
     });
 
-    // console.log("message: " + msg, users[socket.id]["promptIndex"]);
+    function checkCompleted() {
+      for (var user of users) {
+        if (user["promptIndex"] !== wantedPrompts) {
+          return false;
+        }
+      }
+      return true;
+    }
+
+    if (playerAnswers.length == users.length) {
+      playerAnswers = {};
+    }
+
+    if (!playerAnswers[socket.id]) {
+      playerAnswers[socket.id] = {};
+    }
+
+    playerAnswers[socket.id]["Answer"] = msg;
+
+    if (gamemode == "turns") {
+      if (users[socket.id]["promptIndex"] == chosenPrompts.length) {
+        if (checkCompleted()) {
+          var topPlayer;
+          for (var player in users) {
+            topPlayer ? null : (topPlayer = users[0]);
+            if (player["Points"] > users[topPlayer]["Points"]) {
+              topPlayer = player;
+            }
+          }
+        }
+      }
+
+      for (let i = 1; i < users.length; i++) {
+        console.log(users[i]["promptIndex"], users[i - 1]["promptIndex"]);
+        if (users[i]["promptIndex"] == users[i - 1]["promptIndex"]) {
+          // MOVE TO NEXT PROMPT
+          sendMessage(users[socket.id]["promptIndex"], true);
+          checkWholePrompt.then((fulfilled) => {
+            for (var player of playerAnswers) {
+              var msg = player["Answer"];
+              if (
+                msg ==
+                  chosenPrompts[
+                    users[socket.id]["promptIndex"]
+                  ].author.toLowerCase() ||
+                chosenPrompts[users[socket.id]["promptIndex"]].author
+                  .toLowerCase()
+                  .split(" ")
+                  .find((obj) => obj == msg) ||
+                fulfilled
+              ) {
+                io.sockets[player].emit("toast", "Incorrect");
+              }
+            }
+          });
+        }
+      }
+    }
+
     checkWholePrompt
       .then((fulfilled) => {
         // console.log(fulfilled);
@@ -111,18 +227,17 @@ io.on("connection", (socket) => {
             .find((obj) => obj == msg) ||
           fulfilled
         ) {
-          // MAKE A WAY TO CHECK IF SOMEBODY WON HERE
           users[socket.id]["promptIndex"] += 1;
+          if (gamemode == "race") {
+            if (users[socket.id]["promptIndex"] == chosenPrompts.length) {
+              console.log(checkToken(token));
+              io.emit("winner", checkToken(token));
+              return;
+            }
 
-          // console.log(users[socket.id]["promptIndex"], chosenPrompts.length);
-
-          if (users[socket.id]["promptIndex"] == chosenPrompts.length) {
-            io.emit("winner", socket.id);
-            return;
+            sendMessage(users[socket.id]["promptIndex"]);
+            socket.emit("answerStatus", "Correct");
           }
-
-          sendMessage(users[socket.id]["promptIndex"]);
-          socket.emit("answerStatus", "Correct");
         } else {
           socket.emit("answerStatus", "Wrong");
         }
@@ -130,13 +245,44 @@ io.on("connection", (socket) => {
       .catch((err) => console.log("caught error", err));
   });
 
-  socket.on("upload", (file) => {
-    socket.emit("reset", true);
+  socket.on("requestToken", (username, password) => {
+    username = username.toLowerCase();
+    username = username.replace(/\W+/gi, "");
+    const users = getUsersFile();
+    console.log("users file", users);
+    if (users[username] == undefined) {
+      // convert all file to from base then back to base
+      // binary data should be performed using Buffer.from(str, 'base64') and buf.toString('base64').
+      const token =
+        Math.random().toString(36).substring(2) +
+        Math.random().toString(36).substring(2);
+      users[username] = { token: token.toString(), password: password };
+      var buf = new Buffer.from(JSON.stringify(users));
+      fs.writeFileSync(usersFile, buf.toString("base64"), { encoding: "utf8" });
+      socket.emit(
+        "receiveToken",
+        token,
+        "Created new user. Sending you to your destination."
+      );
+    } else if (password == users[username]["password"]) {
+      const token =
+        Math.random().toString(36).substring(2) +
+        Math.random().toString(36).substring(2);
+      users[username] = { token: token.toString(), password: password };
+      var buf = new Buffer.from(JSON.stringify(users));
+      fs.writeFileSync(usersFile, buf.toString("base64"), { encoding: "utf8" });
+      socket.emit("receiveToken", token);
+    }
+    console.log(users);
+  });
 
-    if (!game) {
+  socket.on("upload", (file) => {
+    io.emit("reset", true);
+
+    if (!game && users[socket.id]["host"] == true) {
       game = true;
     } else {
-      socket.emit("reset", true);
+      io.emit("reset", true);
       return;
     }
 
@@ -183,7 +329,7 @@ io.on("connection", (socket) => {
 
       console.log(chosenPrompts.length, chosenPrompts);
 
-      sendMessage(0);
+      sendMessage(0, true);
     } catch (err) {
       console.log("getRandomMessage", err);
       socket.emit("toast", "Please supply a working .json.");
@@ -193,6 +339,8 @@ io.on("connection", (socket) => {
 
   socket.on("disconnect", () => {
     userCount -= 1;
+
+    io.emit("playerCount", userCount);
 
     console.log("user disconnected", userCount);
   });
