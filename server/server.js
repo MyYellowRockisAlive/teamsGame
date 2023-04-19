@@ -6,7 +6,6 @@ const { Server } = require("socket.io");
 const io = new Server(server);
 const path = require("path");
 const fs = require("fs");
-const { writeFile } = fs;
 
 // https://expressjs.com/en/starter/static-files.html STILL MUST USE path (for some reason it requires absolute path)
 app.use(express.static(path.join("../public")));
@@ -42,7 +41,7 @@ app.get("/login", (req, res) => {
 var userCount = 0;
 const char = "§";
 var chosenPrompts = [];
-const wantedPrompts = 10;
+const wantedPrompts = 5;
 var users = {};
 var game = false;
 var gamemode = "turns";
@@ -137,6 +136,8 @@ io.on("connection", (socket) => {
 
     msg = msg.toLowerCase();
 
+    console.log(msg, chosenPrompts[users[socket.id]["promptIndex"]]["author"]);
+
     const checkWholePrompt = new Promise((resolve, reject) => {
       msg.split(" ").forEach((obj) => {
         for (let answers of chosenPrompts[
@@ -171,46 +172,19 @@ io.on("connection", (socket) => {
       playerAnswers[socket.id] = {};
     }
 
-    playerAnswers[socket.id]["Answer"] = msg;
+    console.log(
+      playerAnswers[socket.id]["Answer"] == "",
+      playerAnswers[socket.id]["Answer"] == undefined
+    );
 
-    if (gamemode == "turns") {
-      if (users[socket.id]["promptIndex"] == chosenPrompts.length) {
-        if (checkCompleted()) {
-          var topPlayer;
-          for (var player in users) {
-            topPlayer ? null : (topPlayer = users[0]);
-            if (player["Points"] > users[topPlayer]["Points"]) {
-              topPlayer = player;
-            }
-          }
-        }
-      }
-
-      for (let i = 1; i < users.length; i++) {
-        console.log(users[i]["promptIndex"], users[i - 1]["promptIndex"]);
-        if (users[i]["promptIndex"] == users[i - 1]["promptIndex"]) {
-          // MOVE TO NEXT PROMPT
-          sendMessage(users[socket.id]["promptIndex"], true);
-          checkWholePrompt.then((fulfilled) => {
-            for (var player of playerAnswers) {
-              var msg = player["Answer"];
-              if (
-                msg ==
-                  chosenPrompts[
-                    users[socket.id]["promptIndex"]
-                  ].author.toLowerCase() ||
-                chosenPrompts[users[socket.id]["promptIndex"]].author
-                  .toLowerCase()
-                  .split(" ")
-                  .find((obj) => obj == msg) ||
-                fulfilled
-              ) {
-                io.sockets[player].emit("toast", "Incorrect");
-              }
-            }
-          });
-        }
-      }
+    if (
+      (playerAnswers[socket.id]["Answer"] == "",
+      playerAnswers[socket.id]["Answer"] == undefined)
+    ) {
+      playerAnswers[socket.id]["Answer"] = msg;
+      socket.emit("blackout", "Waiting");
+    } else {
+      return;
     }
 
     checkWholePrompt
@@ -240,6 +214,67 @@ io.on("connection", (socket) => {
           }
         } else {
           socket.emit("answerStatus", "Wrong");
+        }
+
+        if (gamemode == "turns") {
+          console.log("gamemode is turns");
+          const promptList = Object.values(users);
+
+          for (let i = 1; i < Object.values(users).length; i++) {
+            console.log(
+              promptList[i]["promptIndex"],
+              promptList[i - 1]["promptIndex"]
+            );
+            if (
+              promptList[i]["promptIndex"] == promptList[i - 1]["promptIndex"]
+            ) {
+              // MOVE TO NEXT PROMPT
+              sendMessage(users[socket.id]["promptIndex"], true);
+              checkWholePrompt.then((fulfilled) => {
+                console.log(playerAnswers);
+
+                for (var [player, value] of Object.entries(playerAnswers)) {
+                  console.log("Player: " + player, "Value:", value);
+                  var msg = value["Answer"];
+                  console.log(msg);
+
+                  if (
+                    msg ==
+                      chosenPrompts[
+                        users[socket.id]["promptIndex"]
+                      ].author.toLowerCase() ||
+                    chosenPrompts[users[socket.id]["promptIndex"]].author
+                      .toLowerCase()
+                      .split(" ")
+                      .find((obj) => obj == msg) ||
+                    fulfilled
+                  ) {
+                    io.to(player).emit("toast", "Correct");
+                  }
+
+                  // CLEAR ALL ANSWERS
+                  for (let [key, value] of Object.entries(playerAnswers)) {
+                    playerAnswers[key]["Answer"] = undefined;
+                  }
+                  io.emit("reset", "blank");
+
+                  console.log(playerAnswers);
+                }
+              });
+            }
+          }
+
+          if (users[socket.id]["promptIndex"] == chosenPrompts.length) {
+            if (checkCompleted()) {
+              var topPlayer;
+              for (var player in users) {
+                topPlayer ? null : (topPlayer = users[0]);
+                if (player["Points"] > users[topPlayer]["Points"]) {
+                  topPlayer = player;
+                }
+              }
+            }
+          }
         }
       })
       .catch((err) => console.log("caught error", err));
